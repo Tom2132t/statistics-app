@@ -1,0 +1,24 @@
+/* Center align the navbar content */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+/* Style the navbar title */
+.navbar-title {
+  font-size: 1.5rem;
+}
+
+/* Style the navigation links */
+nav {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Style the active navigation link */
+a.active {
+  font-weight: bold;
+  color: #ff5722;
+}

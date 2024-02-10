@@ -1,0 +1,15 @@
+.dashboard-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; /* Adjust as needed */
+  padding: 20px; /* Optional padding for the container */
+}
+
+.dashboard-item {
+  flex: 0 0 calc(50% - 10px); /* Adjust width and spacing as needed */
+  margin-bottom: 20px; /* Adjust spacing between rows */
+  padding: 10px; /* Optional padding for each item */
+  border: 1px solid #ccc; /* Optional border for each item */
+  border-radius: 8px; /* Optional border radius */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional box shadow */
+}
