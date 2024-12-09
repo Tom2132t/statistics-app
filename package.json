@@ -28,6 +28,7 @@
     "@popperjs/core": "^2.10.2",
     "@swimlane/ngx-charts": "^20.4.1",
     "bootstrap": "^5.2.0",
+    "json-server": "^1.0.0-alpha.23",
     "postcss": "^8.4.21",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

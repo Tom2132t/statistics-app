@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { EMPTY, Observable, switchMap } from 'rxjs';
+import { EMPTY, Observable, finalize, pipe, switchMap, tap } from 'rxjs';
 import { ClientModel } from '../../shared/models/client.model';
 import { ClientService } from '../../shared/services/client.service';
 import { DialogService } from '../../shared/services/dialog.service';
@@ -45,11 +45,16 @@ export class LeadsComponent implements OnInit {
   }
 
   getClients(): void {
-    this.clientsService.getLeads().subscribe((data) => {
-      // this.clients$ = of(data);
-      this.dataSource.data = data;
-      this.dataSource.paginator = this.paginator;
-    });
+    this.clientsService
+      .getLeads()
+      .pipe(
+        tap((data) => {
+          // this.clients$ = of(data);
+          this.dataSource.data = data;
+          this.dataSource.paginator = this.paginator;
+        })
+      )
+      .subscribe();
   }
 
   openDialog(): void {
@@ -58,11 +63,15 @@ export class LeadsComponent implements OnInit {
         width: '500px',
       })
       .afterClosed()
-      .subscribe((result) => {
-        if (result === 'success') {
-          this.getClients(); // Refresh the table if a new client is added
-        }
-      });
+      .pipe(
+        tap((result) => {
+          if (result === 'success') {
+            this.getClients(); // Refresh the table if a new client is added
+          }
+          console.log(result, 'tttetst');
+        })
+      )
+      .subscribe();
   }
 
   editDialog(clientId: number): void {
@@ -74,9 +83,12 @@ export class LeadsComponent implements OnInit {
         data: { client },
       })
       .afterClosed()
-      .subscribe(() => {
-        this.getClients();
-      });
+      .pipe(
+        finalize(() => {
+          this.getClients();
+        })
+      )
+      .subscribe();
   }
 
   removePost(id: number) {
@@ -85,15 +97,16 @@ export class LeadsComponent implements OnInit {
       .afterClosed()
       .pipe(
         switchMap((res): Observable<ClientModel> => {
-          if (res === true) {
+          if (!!res) {
             return this.clientsService.deleteLead(id);
           } else {
             return EMPTY;
           }
+        }),
+        finalize(() => {
+          this.getClients();
         })
       )
-      .subscribe(() => {
-        this.getClients();
-      });
+      .subscribe();
   }
 }

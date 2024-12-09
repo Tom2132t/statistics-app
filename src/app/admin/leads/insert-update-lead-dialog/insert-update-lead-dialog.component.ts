@@ -9,7 +9,7 @@ import {
 import { ClientModel } from '../../../shared/models/client.model';
 import { ClientService } from '../../../shared/services/client.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Dropdown } from 'src/app/shared/models/dropdown.model';
+import { Dropdown } from '../../../shared/models/dropdown.model';
 
 @Component({
   selector: 'app-insert-update-lead-dialog',
@@ -75,33 +75,33 @@ export class InsertUpdateLeadDialogComponent implements OnInit {
       const formData = this.form.value;
 
       if (this.data?.client) {
-        this.leadService.updateLead(this.data.client.id, formData).subscribe(
-          () => {
+        this.leadService.updateLead(this.data.client.id, formData).subscribe({
+          next: () => {
             this.snackBar.open('Lead updated successfully', 'Close', {
               duration: 3000,
             });
-            this.dialogRef.close();
           },
-          (error) => {
+          error: () => {
             this.snackBar.open('Error updating lead', 'Close', {
               duration: 3000,
             });
-          }
-        );
+          },
+          complete: () => this.dialogRef.close(),
+        });
       } else {
-        this.leadService.createLead(formData).subscribe(
-          () => {
+        this.leadService.createLead(formData).subscribe({
+          next: () => {
             this.snackBar.open('Lead added successfully', 'Close', {
               duration: 3000,
             });
-            this.dialogRef.close('success');
           },
-          (error) => {
+          error: () => {
             this.snackBar.open('Error adding lead', 'Close', {
               duration: 3000,
             });
-          }
-        );
+          },
+          complete: () => this.dialogRef.close('success'),
+        });
       }
     }
   }

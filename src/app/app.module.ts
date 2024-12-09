@@ -12,6 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './shared/material.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -23,9 +24,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     NgbModule,
     BrowserModule,
     AppRoutingModule,
-    MaterialModule,
-    HttpClientModule,
-    ReactiveFormsModule,
+    SharedModule,
     NgIconsModule.withIcons({ heroFaceFrown }),
     BrowserAnimationsModule,
   ],
